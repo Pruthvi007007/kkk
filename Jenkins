@@ -1,24 +1,30 @@
 pipeline {
     agent any
-    
     stages {
+        stage('Checkout') {
+            steps {
+                // Checkout your project from version control (e.g., Git)
+                checkout scm
+            }
+        }
         stage('Build') {
             steps {
-                // Clean up any previously compiled files
-                sh 'rm -rf build'
-                
-                // Create a build directory
-                sh 'mkdir build'
-                
-                // Compile the Java code and move the compiled class file to the build directory
-                sh 'javac -d build HelloWorld.java'
+                // You can add commands to build your HTML and CSS project here
+                sh 'npm install' // Install dependencies if using npm
+                sh 'npm run build' // Or any other build command you have
+            }
+        }
+        stage('Test') {
+            steps {
+                // You can add commands to test your project here
+                sh 'npm test' // Or any other test command you have
             }
         }
         stage('Deploy') {
             steps {
-                // Deploy the built Java application
-                // For simplicity, just execute the compiled class file
-                sh 'java -cp build HelloWorld'
+                // You can add commands to deploy your project here
+                // For example, deploying to a web server
+                sh 'npm run deploy' // Or any other deploy command you have
             }
         }
     }
